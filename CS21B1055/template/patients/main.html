@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="/static/images/icon.jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <title>{{session.u_email}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/main.css" />
+    <script src="/static/main.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <h3>
+        Hi {{session.u_email}}
+        <a href="#" onclick="mainnavbar()" id="navbar"
+          ><i class="fa fa-bars"></i
+        ></a>
+      </h3> 
+    </div>
+    <div class="subheader">
+        <ul>
+            <h3><li><a href="{{url_for('media')}}" target="_blank" id="browse">Community</a></li></h3>
+          <h3><li><a href="{{url_for('product')}}" target="_blank" id="browse">Pharmacy</a></li></h3>
+          <h3><li><a href="{{url_for('browseengine')}}" target="_blank" id="browse">Browse</a></li></h3>
+          <h3 id="signout"><a href="/userlogout">Sign Out</a> </h3>
+          </ul>
+    </div> 
+    <div class="search">
+        <input type="search" id="myInput" onkeyup="myFunction()" placeholder="Enter the Issues" title="Type in a name">
+    </div>
+
+    <div class="doc-list">
+        <ul>
+            {% for row in hospdata %}
+            <li>
+               <div class="hosp-data">
+                   <b>Doctor Name:</b> {{row.d_name}} <br>
+                   <b>Hospital Name:</b>  {{row.d_hosp}}<br>
+                   <b>Specialization :</b>  {{row.d_speci}}. <br>
+                   <b> Email Address:</b> {{row.d_email}}<br>
+                   <b> Phone Number:</b> {{row.d_phno}}<br>
+                   <b> Alternate Phone Number:</b> {{row.d_phno2}}<br>
+                   
+                   <b>Status:</b>{{row.d_status}}<br>
+                   <b> <a href="{{row.docmeet}}" target="_blank">Meet Here</a></b><br>
+                 <div class="doctors-moreinfo"><a href="/bookings" target="_blank">Book Now</div>
+                 
+                </div>
+            </li><br>
+            {% endfor %}
+         </ul>
+       </div>
+       <script>
+        function myFunction() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("hosp-data");
+          tr = table.getElementsByTagName("tr");
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }       
+          }
+        }
+        </script>
+
+  </body>
+</html>
